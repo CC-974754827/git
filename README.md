@@ -49,8 +49,6 @@ git status -s 或 git status --short
 $ cat .gitignore
 $ *.[oa] //忽略所有以 .o 或 .a 结尾的文件
 $ *~ //忽略所有以波浪符（~）结尾的文件
-
-
 ```
 ```
 文件 .gitignore 的格式规范如下：
@@ -67,4 +65,128 @@ $ git diff
 查看已暂存的将要添加到下次提交里的内容
 $ git diff --cached
 $ git diff --staged //高版本
+```
+### 移除文件
+```
+$ git rm 文件
+$ git rm \*~ //该命令为删除以 ~ 结尾的所有文件。
+```
+### 移动文件(重命名)
+```
+$ git mv 文件
+```
+## 查看提交历史
+```
+默认不用任何参数的话，git log 会按提交时间列出所有的更新，最近的更新排在最上面。
+$ git log 
+$ git log -p -2 // -p，用来显示每次提交的内容差异。 -2 来仅显示最近两次提交
+$ git log --stat//每次提交的简略的统计信息
+$ git log --since=2.weeks //列出所有最近两周内的提交
+```
+## 撤消操作
+```
+$ git commit --amend
+```
+eg
+
+```
+最终只会有一个提交, 第二次提交将代替第一次提交的结果
+$ git commit -m 'initial commit'
+$ git add forgotten_file
+$ git commit --amend
+```
+### 取消暂存的文件
+```
+$ git reset HEAD 文件
+```
+### 撤消对文件的修改
+```
+$ git checkout -- 文件
+```
+## 远程仓库的使用
+### 查看远程仓库
+```
+$ git remote
+$ git remote -v //显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL
+$ git remote show [remote-name]
+```
+### 添加远程仓库
+```
+$ git remote add <shortname> <url>  //添加一个新的远程 Git 仓库，同时指定一个你可以轻松引用的简写
+$ git fetch pb //想拉取 Paul 的仓库中有但你没有的信息
+```
+### 从远程仓库中抓取与拉取
+```
+$ git fetch [remote-name] //抓取
+$ git pull origin master //拉取
+```
+### 推送到远程仓库
+```
+$ git push origin master
+```
+### 远程仓库的移除与重命名
+```
+$ git remote rename pb paul //重命名
+$ git remote rm paul //移除
+```
+## 打标签
+### 列出标签
+```
+$ git tag
+```
+### 创建标签 附注标签
+```
+两种主要类型的标签：轻量标签（lightweight）与附注标签（annotated）
+$ git tag -a v1.4 -m 'my version 1.4' // -a 创建标签  -m 指定了一条将会存储在标签中的信息
+```
+### 轻量标签
+```
+$ git tag v1.4-lw
+```
+### 共享标签
+```
+$ git push origin v1.5
+$ git push origin --tags //会把所有不在远程仓库服务器上的标签全部传送到那里
+```
+### 删除标签
+```
+$ git tag -d v1.4-lw
+```
+### 检出标签
+```
+$ git checkout 2.0.0
+```
+## Git 别名
+```
+$ git config --global alias.ci commit // 意味着，当要输入 git commit 时，只需要输入 git ci
+```
+```
+$ git last //看到最后一次提交
+```
+## 分支
+### 分支创建
+```
+$ git branch testing //创建一个 testing 分支
+```
+### 分支切换
+```
+$ git checkout testing
+```
+新建分支并同时切换到该分支上
+```
+$ git checkout -b iss53
+```
+删除分支
+```
+$ git branch -d hotfix
+```
+### 合并merge
+```
+$ git merge hotfix
+```
+## 分支管理
+```
+$ git branch -v  //查看每一个分支的最后一次提交
+$ git branch --merged //查看哪些分支已经合并到当前分支
+$ git branch --no-merged //查看所有包含未合并工作的分支
 ```
